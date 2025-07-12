@@ -12,22 +12,263 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+		<style>
+			/* Custom navigation styles */
+			#nav {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				background: rgba(0, 0, 0, 0.9);
+				z-index: 1000;
+				padding: 1rem 0;
+				backdrop-filter: blur(10px);
+			}
+			
+			#nav ul {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-wrap: wrap;
+			}
+			
+			#nav li {
+				margin: 0 1rem;
+			}
+			
+			#nav a {
+				color: #fff;
+				text-decoration: none;
+				padding: 0.5rem 1rem;
+				border-radius: 3px;
+				transition: all 0.3s ease;
+				font-size: 0.9rem;
+				font-weight: 500;
+			}
+			
+			#nav a:hover {
+				background: rgba(255, 255, 255, 0.2);
+				transform: translateY(-2px);
+			}
+			
+			/* Adjust body padding to account for fixed nav */
+			body {
+				padding-top: 70px;
+			}
+			
+			/* Improve section spacing */
+			section {
+				padding: 3rem 0;
+			}
+			
+			/* Smooth scrolling */
+			html {
+				scroll-behavior: smooth;
+			}
+			
+			/* Enhanced styling for author name highlighting */
+			.publication-authors strong {
+				color: #007bff;
+				font-weight: 700;
+				background: linear-gradient(135deg, #007bff, #0056b3);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+				background-clip: text;
+				text-shadow: 0 0 3px rgba(0, 123, 255, 0.3);
+				font-size: 1.05em;
+				letter-spacing: 0.5px;
+			}
+			
+			/* Fallback for browsers that don't support background-clip */
+			@supports not (-webkit-background-clip: text) {
+				.publication-authors strong {
+					color: #007bff;
+					font-weight: 700;
+					text-shadow: 0 0 3px rgba(0, 123, 255, 0.3);
+					font-size: 1.05em;
+					letter-spacing: 0.5px;
+				}
+			}
+			
+			/* Publication toggle styles */
+			.publication-toggle {
+				text-align: center;
+				margin-bottom: 2rem;
+			}
+			
+			.toggle-btn {
+				background: #f4f4f4;
+				border: none;
+				padding: 0.8rem 1.5rem;
+				margin: 0 0.5rem;
+				border-radius: 25px;
+				cursor: pointer;
+				transition: all 0.3s ease;
+				font-weight: 500;
+			}
+			
+			.toggle-btn.active {
+				background: #007bff;
+				color: white;
+			}
+			
+			.toggle-btn:hover {
+				transform: translateY(-2px);
+				box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+			}
+			
+			.publication-section {
+				display: none;
+			}
+			
+			.publication-section.active {
+				display: block;
+			}
+			
+			/* Publication card styles for consistent appearance */
+			.publication-card {
+				margin-bottom: 2rem;
+				padding: 1.5rem;
+				background: #f8f9fa;
+				border-radius: 5px;
+				display: flex;
+				flex-direction: row;
+				min-height: 200px;
+				border-left: 4px solid #007bff;
+				gap: 1.5rem;
+			}
+			
+			.publication-image {
+				flex-shrink: 0;
+				width: 150px;
+				height: 120px;
+				background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+				border-radius: 5px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				color: white;
+				font-size: 2rem;
+				position: relative;
+				overflow: hidden;
+			}
+			
+			.publication-image::before {
+				content: '📄';
+				font-size: 2.5rem;
+				opacity: 0.8;
+			}
+			
+			.publication-content {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+			}
+			
+			.publication-title {
+				margin-top: 0;
+				margin-bottom: 1rem;
+				color: #333;
+				font-size: 1.1rem;
+				line-height: 1.3;
+				flex-grow: 0;
+			}
+			
+			.publication-authors {
+				margin: 0.5rem 0;
+				color: #666;
+				font-size: 0.95rem;
+				flex-grow: 0;
+			}
+			
+			.publication-venue {
+				margin: 0.5rem 0;
+				font-size: 0.95rem;
+				flex-grow: 1;
+			}
+			
+			.publication-links {
+				margin: 1rem 0 0 0;
+				flex-grow: 0;
+			}
+			
+			.publication-links .button {
+				margin-right: 0.5rem;
+				margin-bottom: 0.5rem;
+			}
+			
+			/* Responsive design for publication cards */
+			@media (max-width: 768px) {
+				.publication-card {
+					flex-direction: column;
+					gap: 1rem;
+				}
+				
+				.publication-image {
+					width: 100%;
+					height: 100px;
+				}
+			}
+			
+			/* Responsive nav */
+			@media (max-width: 768px) {
+				#nav a {
+					font-size: 0.8rem;
+					padding: 0.3rem 0.6rem;
+				}
+				
+				#nav li {
+					margin: 0 0.5rem;
+				}
+			}
+		</style>
 	</head>
 	<body class="is-preload">
+
+		<!-- Navigation -->
+		<nav id="nav">
+			<ul>
+				<li><a href="#home">Home</a></li>
+				<li><a href="#one">About</a></li>
+				<li><a href="#news">News</a></li>
+				<li><a href="#publication">Publications</a></li>
+				<li><a href="#three">Contact</a></li>
+			</ul>
+		</nav>
 
 		<!-- Header -->
 			<header id="header">
 				<div class="inner">
 					<a href="#" class="personal image"><img src="images/avatar.jpg" alt="" /></a>
-					<h1><strong>Donglin Yang</strong>
-<!--						<br />-->
-<!--					A student from THU EE<br />-->
+					<h1><strong>Donglin Yang</strong><br />
+						<span style="font-size: 0.9em; color: #333; font-weight: 500; text-shadow: 0 1px 2px rgba(255,255,255,0.8);">Ph.D. Student in ECE, UBC</span>
 					</h1>
 				</div>
 			</header>
 
 		<!-- Main -->
 			<div id="main">
+				<!-- Home Section (for proper navigation) -->
+				<section id="home" style="padding: 0; height: 0; visibility: hidden;">
+					<!-- This is a hidden anchor for the home navigation -->
+				</section>
+
+				<!-- Quote Section -->
+				<section id="quote" style="padding: 2rem 0; text-align: center; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); margin-top: 0;">
+					<div class="container">
+						<blockquote style="font-size: 1.1rem; font-style: italic; color: #555; margin: 0; padding: 0 2rem; border: none; position: relative; line-height: 1.6;">
+							<span style="font-size: 3rem; color: #007bff; opacity: 0.3; position: absolute; left: 0; top: -10px;">"</span>
+							<span style="font-size: 3rem; color: #007bff; opacity: 0.3; position: absolute; right: 0; bottom: -20px;">"</span>
+							The more effective methods have always been the ones that scale with computation, and the more brittle ones have been those that rely on human knowledge.
+							<footer style="margin-top: 1rem; font-size: 0.9rem; color: #777;">
+								— Rich Sutton, <em>The Bitter Lesson</em>
+							</footer>
+						</blockquote>
+					</div>
+				</section>
 
 				<!-- One -->
 					<section id="one">
@@ -36,57 +277,145 @@
 						</header>
 						<p>Currently, I am a Ph.D student in <a href="https://ece.ubc.ca/"> Department of Electrical Computer Engineering, University of British Columbia</a>
 							, supervised by <a href="https://lrjconan.github.io/index.html">Prof. Renjie Liao</a>.
-							My current research focuses on deep generative models.
-							More broadly, my interests span various areas of machine learning, including imitation learning, reinforcement learning, and Hopfield networks.
-							<!-- I am interested in machine learning and statistics models as well as their applications. During my Ph.D. study, I will conduct researches advised by <a href="https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/liu-han.html">Prof.Han Liu</a>. -->
-
+							My current research focuses on <strong>deep generative models</strong>.
+							More broadly, my interests span various areas of machine learning, including <strong>imitation learning</strong>, <strong>reinforcement learning</strong>, and <strong>Hopfield networks</strong>.
 						</p>
 						<p>Previously, I was a Ph.D student in <a href="https://www.mccormick.northwestern.edu/computer-science/"> Department of Computer Science, Northwestern University</a>
 							from September 2022 to June 2023, supervised by <a href="https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/liu-han.html">Prof. Han Liu</a>. I obtained my B.E. degree from
 							<a href="https://www.ee.tsinghua.edu.cn/en/">Department of Electrical Engineering, Tsinghua University</a> in July 2022. In the course of my undergraduate study, I worked closely with
 							<a href="http://people.iiis.tsinghua.edu.cn/~gaoyang/yang-gao.weebly.com/index.html">Prof. Yang Gao</a> on topics of imitation learning.
-
 						</p>
-<!--						<p>Previously, I obtained my B.E. degree from-->
-<!--							<a href="https://www.ee.tsinghua.edu.cn/en/">Department of Electrical Engineering, Tsinghua University</a> in July 2022.-->
-
-<!--						</p>-->
-<!--						<ul class="actions">-->
-<!--							<li><a href="#" class="button">Learn More</a></li>-->
-<!--						</ul>-->
+						<div style="margin-top: 2rem;">
+							<a href="#publication" class="button primary">View Publications</a>
+							<a href="#three" class="button">Get in Touch</a>
+						</div>
 					</section>
 
 				<!-- News -->
-					<section  id="news">
+					<section id="news">
 						<h2>News</h2>
-						<ul>
-							<li>[03/2023]A great honor to join UBC ECE!</li>
-<!--							<li>[04/2022]A great honor to join Northwestern CS!</li>-->
-						</ul>
+						<div style="background: #f8f9fa; padding: 1.5rem; border-radius: 5px; border-left: 4px solid #007bff;">
+							<ul style="margin: 0; padding-left: 1.5rem;">
+								<li style="margin-bottom: 0.5rem;"><strong>[03/2023]</strong> A great honor to join UBC ECE!</li>
+							</ul>
+						</div>
 					</section>
 
 				<!-- Publication -->
 					<section id="publication">
 						<h2>Publications</h2>
-						<div class="row">
-							<p>
-								<font color="black" size=5><a href="https://arxiv.org/abs/2309.12673">On Sparse Modern Hopfield Model</a></font><br />
-								Jerry Yao-Chieh Hu, Donglin Yang, Dennis Wu, Chenwei Xu, Bo-Yu Chen, Han Liu.<br />
-								<font color="black"><i>NeurIPS 2023</i></font> &nbsp <a href="https://arxiv.org/pdf/2309.12673.pdf">PDF</a>
-								/<a href="https://www.mccormick.northwestern.edu/computer-science/news-events/news/articles/2023/strong-northwestern-cs-presence-at-the-2023-neurips-conference.html">NEWS</a>
-								/<a href="https://github.com/MAGICS-LAB/SparseModernHopfield">Github</a>
+						
+						<!-- Equal contribution note -->
+						<div style="background: #e8f4f8; padding: 1rem; border-radius: 5px; margin-bottom: 2rem; border-left: 4px solid #007bff;">
+							<p style="margin: 0; font-size: 0.9rem; color: #555;">
+								<strong>Note:</strong> * indicates equal contribution (co-first authors)
+							</p>
+						</div>
+						
+						<!-- Toggle buttons -->
+						<div class="publication-toggle">
+							<button class="toggle-btn active" onclick="showPublications('recent')">Recent Publications</button>
+							<button class="toggle-btn" onclick="showPublications('full')">Full Publication List</button>
+						</div>
 
-							</p>
-							<p>
-								<font color="black" size=5><a href="https://proceedings.mlr.press/v162/chen22ab.html">Adaptive Model Design for Markov Decision Process</a></font><br />
-								Siyu Chen*, Donglin Yang*, Jiayang Li, Senmiao Wang, Zhuoran Yang, Zhaoran Wang.<br />
-								<font color="black"><i>ICML 2022</i></font> &nbsp <a href="https://proceedings.mlr.press/v162/chen22ab/chen22ab.pdf">PDF</a>
-							</p>
-							<p>
-								<font color="black" size=5><a href="https://arxiv.org/pdf/2207.09705.pdf">Resolving Copycat Problems in Visual Imitation Learning via Residual Action Prediction</a></font><br />
-								Chia-Chi Chuang*, Donglin Yang*, Chuan Wen*, Yang Gao.<br />
-								<font color="black"><i>ECCV 2022</i></font> &nbsp <a href="https://arxiv.org/pdf/2207.09705.pdf">PDF</a>/<a href="https://github.com/linYDTHU/Resolving_copycat_problems_via_residual_prediction">Github</a>
-							</p>
+						<!-- Recent Publications (Latest 5) -->
+						<div id="recent-publications" class="publication-section active">
+							<div class="row">
+								<div class="publication-card">
+									<div class="publication-image">
+										<span>📄</span>
+									</div>
+									<div class="publication-content">
+										<h3 class="publication-title"><a href="https://arxiv.org/abs/2309.12673">On Sparse Modern Hopfield Model</a></h3>
+										<p class="publication-authors">Authors: Jerry Yao-Chieh Hu, <strong>Donglin Yang</strong>, Dennis Wu, Chenwei Xu, Bo-Yu Chen, Han Liu</p>
+										<p class="publication-venue">Conference: <em>NeurIPS 2023</em></p>
+										<div class="publication-links">
+											<a href="https://arxiv.org/pdf/2309.12673.pdf" class="button small">PDF</a>
+											<a href="https://www.mccormick.northwestern.edu/computer-science/news-events/news/articles/2023/strong-northwestern-cs-presence-at-the-2023-neurips-conference.html" class="button small">News</a>
+											<a href="https://github.com/MAGICS-LAB/SparseModernHopfield" class="button small">GitHub</a>
+										</div>
+									</div>
+								</div>
+								
+								<div class="publication-card">
+									<div class="publication-image">
+										<span>📄</span>
+									</div>
+									<div class="publication-content">
+										<h3 class="publication-title"><a href="https://arxiv.org/pdf/2207.09705.pdf">Resolving Copycat Problems in Visual Imitation Learning via Residual Action Prediction</a></h3>
+										<p class="publication-authors">Authors: Chia-Chi Chuang*, <strong>Donglin Yang*</strong>, Chuan Wen*, Yang Gao</p>
+										<p class="publication-venue">Conference: <em>ECCV 2022</em></p>
+										<div class="publication-links">
+											<a href="https://arxiv.org/pdf/2207.09705.pdf" class="button small">PDF</a>
+											<a href="https://github.com/linYDTHU/Resolving_copycat_problems_via_residual_prediction" class="button small">GitHub</a>
+										</div>
+									</div>
+								</div>
+								
+								<div class="publication-card">
+									<div class="publication-image">
+										<span>📄</span>
+									</div>
+									<div class="publication-content">
+										<h3 class="publication-title"><a href="https://proceedings.mlr.press/v162/chen22ab.html">Adaptive Model Design for Markov Decision Process</a></h3>
+										<p class="publication-authors">Authors: Siyu Chen*, <strong>Donglin Yang*</strong>, Jiayang Li, Senmiao Wang, Zhuoran Yang, Zhaoran Wang</p>
+										<p class="publication-venue">Conference: <em>ICML 2022</em></p>
+										<div class="publication-links">
+											<a href="https://proceedings.mlr.press/v162/chen22ab/chen22ab.pdf" class="button small">PDF</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Full Publication List -->
+						<div id="full-publications" class="publication-section">
+							<div class="row">
+								<div class="publication-card">
+									<div class="publication-image">
+										<span>📄</span>
+									</div>
+									<div class="publication-content">
+										<h3 class="publication-title"><a href="https://arxiv.org/abs/2309.12673">On Sparse Modern Hopfield Model</a></h3>
+										<p class="publication-authors">Authors: Jerry Yao-Chieh Hu, <strong>Donglin Yang</strong>, Dennis Wu, Chenwei Xu, Bo-Yu Chen, Han Liu</p>
+										<p class="publication-venue">Conference: <em>NeurIPS 2023</em></p>
+										<div class="publication-links">
+											<a href="https://arxiv.org/pdf/2309.12673.pdf" class="button small">PDF</a>
+											<a href="https://www.mccormick.northwestern.edu/computer-science/news-events/news/articles/2023/strong-northwestern-cs-presence-at-the-2023-neurips-conference.html" class="button small">News</a>
+											<a href="https://github.com/MAGICS-LAB/SparseModernHopfield" class="button small">GitHub</a>
+										</div>
+									</div>
+								</div>
+								
+								<div class="publication-card">
+									<div class="publication-image">
+										<span>📄</span>
+									</div>
+									<div class="publication-content">
+										<h3 class="publication-title"><a href="https://arxiv.org/pdf/2207.09705.pdf">Resolving Copycat Problems in Visual Imitation Learning via Residual Action Prediction</a></h3>
+										<p class="publication-authors">Authors: Chia-Chi Chuang*, <strong>Donglin Yang*</strong>, Chuan Wen*, Yang Gao</p>
+										<p class="publication-venue">Conference: <em>ECCV 2022</em></p>
+										<div class="publication-links">
+											<a href="https://arxiv.org/pdf/2207.09705.pdf" class="button small">PDF</a>
+											<a href="https://github.com/linYDTHU/Resolving_copycat_problems_via_residual_prediction" class="button small">GitHub</a>
+										</div>
+									</div>
+								</div>
+								
+								<div class="publication-card">
+									<div class="publication-image">
+										<span>📄</span>
+									</div>
+									<div class="publication-content">
+										<h3 class="publication-title"><a href="https://proceedings.mlr.press/v162/chen22ab.html">Adaptive Model Design for Markov Decision Process</a></h3>
+										<p class="publication-authors">Authors: Siyu Chen*, <strong>Donglin Yang*</strong>, Jiayang Li, Senmiao Wang, Zhuoran Yang, Zhaoran Wang</p>
+										<p class="publication-venue">Conference: <em>ICML 2022</em></p>
+										<div class="publication-links">
+											<a href="https://proceedings.mlr.press/v162/chen22ab/chen22ab.pdf" class="button small">PDF</a>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</section>
 
@@ -96,369 +425,21 @@
 						<p>If you have any questions about my recent projects or want to explore future possibilities for cooperation, please feel free to contact me!</p>
 						<div class="row">
 							<div class="col-8 col-12-small">
-								<ul class="labeled-icons">
-									<li>
-										<h3 class="icon solid fa-home"><span class="label">Address</span></h3>
-										30 ShuangQing Rd., Haidian, Beijing, China
-									</li>
-<!--									<li>-->
-<!--										<h3 class="icon solid fa-mobile-alt"><span class="label">Phone</span></h3>-->
-<!--										000-000-0000-->
-<!--									</li>-->
-									<li>
-										<h3 class="icon solid fa-envelope"><span class="label">Email</span></h3>
-										<a href="#">ydlin718@gmail.com</a>
-									</li>
-								</ul>
-<!--								<form method="post" action="#">-->
-<!--									<div class="row gtr-uniform gtr-50">-->
-<!--										<div class="col-6 col-12-xsmall"><input type="text" name="name" id="name" placeholder="Name" /></div>-->
-<!--										<div class="col-6 col-12-xsmall"><input type="email" name="email" id="email" placeholder="Email" /></div>-->
-<!--										<div class="col-12"><textarea name="message" id="message" placeholder="Message" rows="4"></textarea></div>-->
-<!--									</div>-->
-<!--								</form>-->
-<!--								<ul class="actions">-->
-<!--									<li><input type="submit" value="Send Message" /></li>-->
-<!--								</ul>-->
+								<div style="background: #f8f9fa; padding: 1.5rem; border-radius: 5px;">
+									<ul class="labeled-icons">
+										<li>
+											<h3 class="icon solid fa-home"><span class="label">Address</span></h3>
+											University of British Columbia, Vancouver, BC, Canada
+										</li>
+										<li>
+											<h3 class="icon solid fa-envelope"><span class="label">Email</span></h3>
+											<a href="mailto:ydlin718@gmail.com">ydlin718@gmail.com</a>
+										</li>
+									</ul>
+								</div>
 							</div>
-<!--							<div class="col-4 col-12-small">-->
-<!--								<ul class="labeled-icons">-->
-<!--									<li>-->
-<!--										<h3 class="icon solid fa-home"><span class="label">Address</span></h3>-->
-<!--										30 ShuangQing Rd.<br />-->
-<!--										Haidian, Beijing<br />-->
-<!--										China-->
-<!--									</li>-->
-<!--&lt;!&ndash;									<li>&ndash;&gt;-->
-<!--&lt;!&ndash;										<h3 class="icon solid fa-mobile-alt"><span class="label">Phone</span></h3>&ndash;&gt;-->
-<!--&lt;!&ndash;										000-000-0000&ndash;&gt;-->
-<!--&lt;!&ndash;									</li>&ndash;&gt;-->
-<!--									<li>-->
-<!--										<h3 class="icon solid fa-envelope"><span class="label">Email</span></h3>-->
-<!--										<a href="#">ydlin718@gmail.com</a>-->
-<!--									</li>-->
-<!--								</ul>-->
-<!--							</div>-->
 						</div>
 					</section>
-
-				<!-- Four -->
-				<!--
-					<section id="four">
-						<h2>Elements</h2>
-
-						<section>
-							<h4>Text</h4>
-							<p>This is <b>bold</b> and this is <strong>strong</strong>. This is <i>italic</i> and this is <em>emphasized</em>.
-							This is <sup>superscript</sup> text and this is <sub>subscript</sub> text.
-							This is <u>underlined</u> and this is code: <code>for (;;) { ... }</code>. Finally, <a href="#">this is a link</a>.</p>
-							<hr />
-							<header>
-								<h4>Heading with a Subtitle</h4>
-								<p>Lorem ipsum dolor sit amet nullam id egestas urna aliquam</p>
-							</header>
-							<p>Nunc lacinia ante nunc ac lobortis. Interdum adipiscing gravida odio porttitor sem non mi integer non faucibus ornare mi ut ante amet placerat aliquet. Volutpat eu sed ante lacinia sapien lorem accumsan varius montes viverra nibh in adipiscing blandit tempus accumsan.</p>
-							<header>
-								<h5>Heading with a Subtitle</h5>
-								<p>Lorem ipsum dolor sit amet nullam id egestas urna aliquam</p>
-							</header>
-							<p>Nunc lacinia ante nunc ac lobortis. Interdum adipiscing gravida odio porttitor sem non mi integer non faucibus ornare mi ut ante amet placerat aliquet. Volutpat eu sed ante lacinia sapien lorem accumsan varius montes viverra nibh in adipiscing blandit tempus accumsan.</p>
-							<hr />
-							<h2>Heading Level 2</h2>
-							<h3>Heading Level 3</h3>
-							<h4>Heading Level 4</h4>
-							<h5>Heading Level 5</h5>
-							<h6>Heading Level 6</h6>
-							<hr />
-							<h5>Blockquote</h5>
-							<blockquote>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan faucibus. Vestibulum ante ipsum primis in faucibus lorem ipsum dolor sit amet nullam adipiscing eu felis.</blockquote>
-							<h5>Preformatted</h5>
-							<pre><code>i = 0;
-
-while (!deck.isInOrder()) {
-print 'Iteration ' + i;
-deck.shuffle();
-i++;
-}
-
-print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
-						</section>
-
-						<section>
-							<h4>Lists</h4>
-							<div class="row">
-								<div class="col-6 col-12-xsmall">
-									<h5>Unordered</h5>
-									<ul>
-										<li>Dolor pulvinar etiam magna etiam.</li>
-										<li>Sagittis adipiscing lorem eleifend.</li>
-										<li>Felis enim feugiat dolore viverra.</li>
-									</ul>
-									<h5>Alternate</h5>
-									<ul class="alt">
-										<li>Dolor pulvinar etiam magna etiam.</li>
-										<li>Sagittis adipiscing lorem eleifend.</li>
-										<li>Felis enim feugiat dolore viverra.</li>
-									</ul>
-								</div>
-								<div class="col-6 col-12-xsmall">
-									<h5>Ordered</h5>
-									<ol>
-										<li>Dolor pulvinar etiam magna etiam.</li>
-										<li>Etiam vel felis at lorem sed viverra.</li>
-										<li>Felis enim feugiat dolore viverra.</li>
-										<li>Dolor pulvinar etiam magna etiam.</li>
-										<li>Etiam vel felis at lorem sed viverra.</li>
-										<li>Felis enim feugiat dolore viverra.</li>
-									</ol>
-									<h5>Icons</h5>
-									<ul class="icons">
-										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-										<li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
-										<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
-										<li><a href="#" class="icon brands fa-tumblr"><span class="label">Tumblr</span></a></li>
-									</ul>
-								</div>
-							</div>
-							<h5>Actions</h5>
-							<ul class="actions">
-								<li><a href="#" class="button primary">Default</a></li>
-								<li><a href="#" class="button">Default</a></li>
-							</ul>
-							<ul class="actions small">
-								<li><a href="#" class="button primary small">Small</a></li>
-								<li><a href="#" class="button small">Small</a></li>
-							</ul>
-							<div class="row">
-								<div class="col-6 col-12-small">
-									<ul class="actions stacked">
-										<li><a href="#" class="button primary">Default</a></li>
-										<li><a href="#" class="button">Default</a></li>
-									</ul>
-								</div>
-								<div class="col-6 col-12-small">
-									<ul class="actions stacked">
-										<li><a href="#" class="button primary small">Small</a></li>
-										<li><a href="#" class="button small">Small</a></li>
-									</ul>
-								</div>
-								<div class="col-6 col-12-small">
-									<ul class="actions stacked">
-										<li><a href="#" class="button primary fit">Default</a></li>
-										<li><a href="#" class="button fit">Default</a></li>
-									</ul>
-								</div>
-								<div class="col-6 col-12-small">
-									<ul class="actions stacked">
-										<li><a href="#" class="button primary small fit">Small</a></li>
-										<li><a href="#" class="button small fit">Small</a></li>
-									</ul>
-								</div>
-							</div>
-						</section>
-
-						<section>
-							<h4>Table</h4>
-							<h5>Default</h5>
-							<div class="table-wrapper">
-								<table>
-									<thead>
-										<tr>
-											<th>Name</th>
-											<th>Description</th>
-											<th>Price</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>Item One</td>
-											<td>Ante turpis integer aliquet porttitor.</td>
-											<td>29.99</td>
-										</tr>
-										<tr>
-											<td>Item Two</td>
-											<td>Vis ac commodo adipiscing arcu aliquet.</td>
-											<td>19.99</td>
-										</tr>
-										<tr>
-											<td>Item Three</td>
-											<td> Morbi faucibus arcu accumsan lorem.</td>
-											<td>29.99</td>
-										</tr>
-										<tr>
-											<td>Item Four</td>
-											<td>Vitae integer tempus condimentum.</td>
-											<td>19.99</td>
-										</tr>
-										<tr>
-											<td>Item Five</td>
-											<td>Ante turpis integer aliquet porttitor.</td>
-											<td>29.99</td>
-										</tr>
-									</tbody>
-									<tfoot>
-										<tr>
-											<td colspan="2"></td>
-											<td>100.00</td>
-										</tr>
-									</tfoot>
-								</table>
-							</div>
-
-							<h5>Alternate</h5>
-							<div class="table-wrapper">
-								<table class="alt">
-									<thead>
-										<tr>
-											<th>Name</th>
-											<th>Description</th>
-											<th>Price</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>Item One</td>
-											<td>Ante turpis integer aliquet porttitor.</td>
-											<td>29.99</td>
-										</tr>
-										<tr>
-											<td>Item Two</td>
-											<td>Vis ac commodo adipiscing arcu aliquet.</td>
-											<td>19.99</td>
-										</tr>
-										<tr>
-											<td>Item Three</td>
-											<td> Morbi faucibus arcu accumsan lorem.</td>
-											<td>29.99</td>
-										</tr>
-										<tr>
-											<td>Item Four</td>
-											<td>Vitae integer tempus condimentum.</td>
-											<td>19.99</td>
-										</tr>
-										<tr>
-											<td>Item Five</td>
-											<td>Ante turpis integer aliquet porttitor.</td>
-											<td>29.99</td>
-										</tr>
-									</tbody>
-									<tfoot>
-										<tr>
-											<td colspan="2"></td>
-											<td>100.00</td>
-										</tr>
-									</tfoot>
-								</table>
-							</div>
-						</section>
-
-						<section>
-							<h4>Buttons</h4>
-							<ul class="actions">
-								<li><a href="#" class="button primary">Primary</a></li>
-								<li><a href="#" class="button">Default</a></li>
-							</ul>
-							<ul class="actions">
-								<li><a href="#" class="button large">Large</a></li>
-								<li><a href="#" class="button">Default</a></li>
-								<li><a href="#" class="button small">Small</a></li>
-							</ul>
-							<ul class="actions fit">
-								<li><a href="#" class="button primary fit">Fit</a></li>
-								<li><a href="#" class="button fit">Fit</a></li>
-							</ul>
-							<ul class="actions fit small">
-								<li><a href="#" class="button primary fit small">Fit + Small</a></li>
-								<li><a href="#" class="button fit small">Fit + Small</a></li>
-							</ul>
-							<ul class="actions">
-								<li><a href="#" class="button primary icon solid fa-download">Icon</a></li>
-								<li><a href="#" class="button icon solid fa-download">Icon</a></li>
-							</ul>
-							<ul class="actions">
-								<li><span class="button primary disabled">Primary</span></li>
-								<li><span class="button disabled">Default</span></li>
-							</ul>
-						</section>
-
-						<section>
-							<h4>Form</h4>
-							<form method="post" action="#">
-								<div class="row gtr-uniform gtr-50">
-									<div class="col-6 col-12-xsmall">
-										<input type="text" name="demo-name" id="demo-name" value="" placeholder="Name" />
-									</div>
-									<div class="col-6 col-12-xsmall">
-										<input type="email" name="demo-email" id="demo-email" value="" placeholder="Email" />
-									</div>
-									<div class="col-12">
-										<select name="demo-category" id="demo-category">
-											<option value="">- Category -</option>
-											<option value="1">Manufacturing</option>
-											<option value="1">Shipping</option>
-											<option value="1">Administration</option>
-											<option value="1">Human Resources</option>
-										</select>
-									</div>
-									<div class="col-4 col-12-small">
-										<input type="radio" id="demo-priority-low" name="demo-priority" checked>
-										<label for="demo-priority-low">Low Priority</label>
-									</div>
-									<div class="col-4 col-12-small">
-										<input type="radio" id="demo-priority-normal" name="demo-priority">
-										<label for="demo-priority-normal">Normal Priority</label>
-									</div>
-									<div class="col-4 col-12-small">
-										<input type="radio" id="demo-priority-high" name="demo-priority">
-										<label for="demo-priority-high">High Priority</label>
-									</div>
-									<div class="col-6 col-12-small">
-										<input type="checkbox" id="demo-copy" name="demo-copy">
-										<label for="demo-copy">Email me a copy of this message</label>
-									</div>
-									<div class="col-6 col-12-small">
-										<input type="checkbox" id="demo-human" name="demo-human" checked>
-										<label for="demo-human">I am a human and not a robot</label>
-									</div>
-									<div class="col-12">
-										<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
-									</div>
-									<div class="col-12">
-										<ul class="actions">
-											<li><input type="submit" value="Send Message" class="primary" /></li>
-											<li><input type="reset" value="Reset" /></li>
-										</ul>
-									</div>
-								</div>
-							</form>
-						</section>
-
-						<section>
-							<h4>Image</h4>
-							<h5>Fit</h5>
-							<div class="box alt">
-								<div class="row gtr-50 gtr-uniform">
-									<div class="col-12"><span class="image fit"><img src="images/fulls/05.jpg" alt="" /></span></div>
-									<div class="col-4"><span class="image fit"><img src="images/thumbs/01.jpg" alt="" /></span></div>
-									<div class="col-4"><span class="image fit"><img src="images/thumbs/02.jpg" alt="" /></span></div>
-									<div class="col-4"><span class="image fit"><img src="images/thumbs/03.jpg" alt="" /></span></div>
-									<div class="col-4"><span class="image fit"><img src="images/thumbs/04.jpg" alt="" /></span></div>
-									<div class="col-4"><span class="image fit"><img src="images/thumbs/05.jpg" alt="" /></span></div>
-									<div class="col-4"><span class="image fit"><img src="images/thumbs/06.jpg" alt="" /></span></div>
-									<div class="col-4"><span class="image fit"><img src="images/thumbs/03.jpg" alt="" /></span></div>
-									<div class="col-4"><span class="image fit"><img src="images/thumbs/02.jpg" alt="" /></span></div>
-									<div class="col-4"><span class="image fit"><img src="images/thumbs/01.jpg" alt="" /></span></div>
-								</div>
-							</div>
-							<h5>Left &amp; Right</h5>
-							<p><span class="image left"><img src="images/avatar.jpg" alt="" /></span>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent.</p>
-							<p><span class="image right"><img src="images/avatar.jpg" alt="" /></span>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent.</p>
-						</section>
-
-					</section>
-				-->
 
 			</div>
 
@@ -466,17 +447,10 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			<footer id="footer">
 				<div class="inner">
 					<ul class="icons">
-<!--						<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>-->
-<!--						<li><a href="https://github.com/linYDTHU" class="icon brands fa-github"><span class="label">Github</span></a></li>-->
-<!--						<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>-->
-<!--						<li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>-->
 						<li><a href="https://github.com/linYDTHU" class="fab fa-github-square fa-3x"><span class="label"></span></a></li>
 						<li><a href="https://scholar.google.com/citations?hl=en&user=jg2atr8AAAAJ"><span class="label"></span><i class="ai ai-google-scholar-square ai-3x"></i></a></li>
 						<li><a href="https://www.linkedin.com/in/donglin-yang-473635212/"><span class="label"></span><i class="fab fa-linkedin-square fa-3x"></i></a></li>
 					</ul>
-<!--					<ul class="copyright">-->
-<!--						<li>&copy; Untitled</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>-->
-<!--					</ul>-->
 				</div>
 			</footer>
 
@@ -487,6 +461,27 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			
+			<script>
+				function showPublications(type) {
+					// Hide all sections
+					document.getElementById('recent-publications').classList.remove('active');
+					document.getElementById('full-publications').classList.remove('active');
+					
+					// Remove active class from all buttons
+					const buttons = document.querySelectorAll('.toggle-btn');
+					buttons.forEach(btn => btn.classList.remove('active'));
+					
+					// Show selected section and activate button
+					if (type === 'recent') {
+						document.getElementById('recent-publications').classList.add('active');
+						buttons[0].classList.add('active');
+					} else {
+						document.getElementById('full-publications').classList.add('active');
+						buttons[1].classList.add('active');
+					}
+				}
+			</script>
 
 	</body>
 </html>
